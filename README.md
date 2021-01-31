@@ -22,12 +22,6 @@ Due the lack of space in my house I had to find a new place keep my Neato D5 sma
 ![alt text](img/printed_arms.jpg)
 
 ### Live demo
-![atl test](img/live.jpg)
+![atl text](img/live.jpg)
 
-<!-- blank line -->
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true" poster="img/live.jpg">
-    <source src="img/demo.mp4" type="video/mp4">
-  </video>
-</figure>
-<!-- blank line -->
+![Demo Video](img/demo.mp4)

@@ -1,0 +1,8 @@
+- alias: Write Servo Value to ESP
+  trigger:
+    platform: state
+    entity_id: input_number.servo_control
+  action:
+  - service: esphome.servo_control_servo
+    data_template:
+      level: '{{ trigger.to_state.state | int }}'

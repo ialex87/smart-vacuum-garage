@@ -1,0 +1,103 @@
+esphome:
+  name: servo
+  platform: ESP8266
+  board: d1_mini
+
+<<: !include wifi_config.yaml
+
+captive_portal:
+
+# Enable logging
+logger:
+
+api:
+  services:
+    - service: control_servo
+      variables:
+        level: float
+      then:
+        - servo.write:
+            id: servo_right
+            level: !lambda 'return level / 100.0;'
+        
+        - servo.write:
+            id: servo_left
+            level: !lambda 'return level / -100.0;'
+            
+  password: !secret esp_api_pass
+
+ota:
+  password: !secret esp_api_pass
+
+# Sync time with Home Assistant.
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+    
+globals:
+  - id: garage_door
+    type: bool
+    restore_value: false
+    initial_value: 'false'
+
+binary_sensor:
+  - platform: gpio
+    pin: D8
+    name: "Vacuum garage door button"
+    on_press:
+      then:
+        - switch.turn_on: vaccum_garage_door
+    on_release:
+      then:
+        - switch.turn_off: vaccum_garage_door
+        
+switch:
+  - platform: template
+    name: "Vaccum garage door"
+    id: vaccum_garage_door
+    restore_state: false
+
+    turn_on_action:
+      - servo.write:
+         id: servo_right
+         level: 100%
+      - servo.write:
+         id: servo_left
+         level: -100%
+      - globals.set:
+          id: garage_door
+          value: 'true'
+      
+    turn_off_action:
+      - servo.write:
+         id: servo_right
+         level: -10%
+      - servo.write:
+         id: servo_left
+         level: 10%
+      - globals.set:
+          id: garage_door
+          value: 'false'
+    lambda: |-
+      return id(garage_door);
+      
+servo:
+  - id: servo_right
+    output: pwm_output_right
+    restore: true
+
+  - id: servo_left
+    output: pwm_output_left
+    restore: true
+
+
+output:
+  - platform: esp8266_pwm
+    id: pwm_output_right
+    pin: D4
+    frequency: 50 Hz
+
+  - platform: esp8266_pwm
+    id: pwm_output_left
+    pin: D3
+    frequency: 50 Hz
