@@ -1,6 +1,6 @@
 # Smart garage for smart vacuum
 
-### Sumary
+### Summary
 Due the lack of space in my house I had to find a new place keep my Neato D5 smart vacuum cleaner. It's been decided - under the kitchen cabinets! 
 
 ### Components used
@@ -18,7 +18,7 @@ Due the lack of space in my house I had to find a new place keep my Neato D5 sma
 ![alt text](img/p2.png)
 ![alt text](img/p3.png)
 
-### 3D printed servo arms (higher quality posible)
+### 3D printed servo arms (higher quality possible)
 ![alt text](img/printed_arms.jpg)
 
 ### Live demo
